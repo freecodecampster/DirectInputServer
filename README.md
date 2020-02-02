@@ -1,7 +1,7 @@
 # DirectInputServer
  Send keystrokes from an iPad Playground to Windows DirectX Games.
  
- ![Playground Screenshot](./images/di.jpeg)
+ ![Playground Screenshot](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DI.jpeg)
  
 ## An Example
 

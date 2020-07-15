@@ -1,11 +1,16 @@
 # DirectInputServer
- Send keystrokes from an iPad Playground to Windows DirectX Games.
+ Send keystrokes from an iPad Playground to Windows DirectX Games. Requires https://github.com/freecodecampster/DirectInputClient a Swift Playground running on iPadOS 13+
  
- ![Playground Screenshot](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DI.jpeg)
+ The code examples below may be out of sync with the latest source code.
+ 
+ ![How it works](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DI.jpeg)
+ ![Playground Screenshot](https://github.com/freecodecampster/DirectInputServer/blob/master/images/iPadOS.jpeg)
  
 ## An Example
 
-Sending P for pause from iPad Playground. Enum Scancode enumerates every possible command. rawValue returns a string.
+Sending P for pause from iPad Playground. 
+DirectInputClient
+An enum called Scancode enumerates every possible command. rawValue returns a string that DirectInputServer acts upon.
 
 Swift code:
 
@@ -141,10 +146,12 @@ The game needs to be the foremost window to receive the commands.
 iPad running iOS 13 Playgrounds and
 Windows Desktop.
 
+This repository is built using Visual Studio 2019 Community Edition. If you're comfortable with Python in another environment the only file required is DirectInputServer.py.
+
 
 ## Test Environment
-iPad Pro 9.7 running iOS 13 Playgrounds
-and Windows 10 v1909.
+iPad Pro 9.7 running iOS 14 beta and Playgrounds
+and Windows 10 v2004.
 Local Wireless Network.
 
 ## Results 

@@ -4,7 +4,7 @@
  The code examples below may be out of sync with the latest source code.
  
  ![How it works](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DI.jpeg)
- ![Playground Screenshot](https://github.com/freecodecampster/DirectInputServer/blob/master/images/iPadOS.jpeg)
+ ![Playground Screenshot](https://github.com/freecodecampster/DirectInputServer/blob/master/images/iPadOS.jpg)
  
 ## An Example
 

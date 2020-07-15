@@ -1,3 +1,7 @@
+# DirectInputServer v2
+# 14/07/2020
+# Freecodecampster
+# https://github.com/freecodecampster/DirectInputServer
 # Python 3.7
 # https://docs.python.org/3/library/index.html
 # Developed on Visual Studio 2019 Community Edition with Python Workload installed.
@@ -51,7 +55,10 @@ class Input(ctypes.Structure):
 
 # DirectX scancodes are input into the game as integers
 # Direct X scancode definitions https://wiki.nexusmods.com/index.php/DirectX_Scancodes_And_How_To_Use_Them
-
+# Keys are received as a space delimited string
+# This string is split and items placed in an array
+# Finally the scancodes dictionary is used to translate key strings to scancode
+# scancode = scancodes.get(keyToPressAndRelease, "error")
 scancodes = {
     "Escape":1,
     "Keyboard1":2,
@@ -188,8 +195,8 @@ def start_server():
     _LOOP = True
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # Bind the socket to the port
-    ipAddress = socket.gethostbyname(socket.getfqdn())
+    # Provide the ipAddress of the host - ipconfig in command prompt Windows
+    ipAddress = "192.168.0.16"
     port = 10001
     server_address = (ipAddress, port)
     print("Starting up on ip address %s port %s" % server_address)
@@ -202,6 +209,7 @@ def start_server():
     # Test sending p to game
     #time.sleep(5)
     #print("Pressing P")
+    # Note a numeric code is sent
     #pressAndRelease(25)
     
     # Wait for a connection
@@ -220,66 +228,86 @@ def start_server():
                     print("Receiving: ", tcpString)
                     # Sent string commands should be seperated by single space delimiters
                     # "command1 command2 command3"
-                    list = tcpString.split()
+                    listOfKeysToPress = tcpString.split()
                     # How many commands were sent?
-                    numberOfScancodes = len(list)
+                    numberOfKeys = len(listOfKeysToPress)
 
                     # Single key command
-                    if numberOfScancodes == 1:
-                        # Stop the application
-                        if tcpString[0:6] == "<STOP>":
-                            print("You have stopped the application")
-                            _LOOP = False
-                        else:
-                            print("1 command: " + list[0])
-                            # Find first command
-                            # Check for empty string
-                            if len(list[0]) > 0:
-                                command1 = scancodes.get(list[0], "error")
-                            if command1 != "error":
-                                pressKey(command1)
-                                releaseKey(command1)
+                    if numberOfKeys == 1:
+                        # Check first item is list isn't empty
+                        if len(listOfKeysToPress[0]) > 0:
+                            # Get string for equality tests
+                            typeOfKey = listOfKeysToPress[0]
+                            # Stop the application
+                            if typeOfKey[0:6] == "<STOP>":
+                                print("You have stopped the application")
+                                _LOOP = False
+                            # Press but don't release the key
+                            elif typeOfKey[0:10] == "<TOGGLEON>":
+                                keyToPress = typeOfKey[10:len(typeOfKey)]
+                                print("Key to press: " + keyToPress)
+                                # Convert key string to int from scancodes dictionary
+                                scancode = scancodes.get(keyToPress, "error")
+                                if scancode != "error":
+                                    pressKey(scancode)
+                            # Release a previously pressed key, state of button managed by Swift Playground
+                            elif typeOfKey[0:11] == "<TOGGLEOFF>":
+                                keyToRelease = typeOfKey[11:len(typeOfKey)]
+                                print("Key to release: " + keyToRelease)
+                                # Convert key string to int from scancodes dictionary
+                                scancode = scancodes.get(keyToRelease, "error")
+                                if scancode != "error":
+                                    releaseKey(scancode)
+                            # A normal key press and release action
                             else:
-                                print("Wrong key")
+                                keyToPressAndRelease = typeOfKey
+                                print("Press and release: " + keyToPressAndRelease)
+                                # Convert key string to int from scancodes dictionary
+                                scancode = scancodes.get(keyToPressAndRelease, "error")
+                                if scancode != "error":
+                                    pressKey(scancode)
+                                    releaseKey(scancode)
+                        else:
+                            print("Wrong key")
 
-                    # Combination of two commands
-                    elif numberOfScancodes == 2:
-                        print("2 commands: " + list[0] + " " + list[1])
-                        # Find first command
-                        if len(list[0]) > 0:
-                            command1 = scancodes.get(list[0], "error")
-                        # Find second command
-                        if len(list[0]) > 0:
-                            command2 = scancodes.get(list[1], "error")
+                    # Combination of two key commands
+                    elif numberOfKeys == 2:
+                        print("2 keys: " + listOfKeysToPress[0] + " " + listOfKeysToPress[1])
+                        # Find first key command
+                        if len(listOfKeysToPress[0]) > 0:
+                            firstScancode = scancodes.get(listOfKeysToPress[0], "error")
+                        # Find second key command
+                        if len(listOfKeysToPress[1]) > 0:
+                            secondScancode = scancodes.get(listOfKeysToPress[1], "error")
                         #if no error send the keycombo
-                        if command1 != "error" and command2 != "error":
-                            pressKey(command1)
-                            pressKey(command2)
-                            releaseKey(command2)
-                            releaseKey(command1)
+                        if firstScancode != "error" and secondScancode != "error":
+                            pressKey(firstScancode)
+                            pressKey(secondScancode)
+                            releaseKey(secondScancode)
+                            releaseKey(firstScancode)
                         else:
                             print('wrong key')
 
-                    # Combination of three commands
-                    elif numberOfScancodes == 3:
-                        print("3 commands: " + list[0] + " " + list[1] + " " + list[2])
-                        # Find first command
-                        if len(list[0]) > 0:
-                            command1 = scancodes.get(list[0], "error")
-                        # Find second command
-                        if len(list[0]) > 0:
-                            command2 = scancodes.get(list[1], "error")
-                        # Find third command
-                        if len(list[0]) > 0:
-                            command3 = scancodes.get(list[2], "error")
+                    # Combination of three key commands
+                    elif numberOfKeys == 3:
+                        print("3 key commands: " + listOfKeysToPress[0] + " " + listOfKeysToPress[1] + " " + listOfKeysToPress[2])
+                        # Find first key command
+                        if len(listOfKeysToPress[0]) > 0:
+                            firstScancode = scancodes.get(listOfKeysToPress[0], "error")
+                        # Find second key command
+                        if len(listOfKeysToPress[1]) > 0:
+                            secondScancode = scancodes.get(listOfKeysToPress[1], "error")
+                        # Find third key command
+                        if len(listOfKeysToPress[2]) > 0:
+                            thirdScancode = scancodes.get(listOfKeysToPress[2], "error")
                         #if no error send the keycombo
-                        if command1 != "error" and command2 != "error" and command3 != "error":
-                            pressKey(command1)
-                            pressKey(command2)
-                            pressKey(command3)
-                            releaseKey(command3)
-                            releaseKey(command2)
-                            releaseKey(command1)
+                        if firstScancode != "error" and secondScancode != "error" and thirdScancode != "error":
+                            pressKey(firstScancode)
+                            pressKey(secondScancode)
+                            pressKey(thirdScancode)
+                            releaseKey(thirdScancode)
+                            releaseKey(secondScancode)
+                            releaseKey(firstScancode)
                         else:
                             print('wrong key')
 

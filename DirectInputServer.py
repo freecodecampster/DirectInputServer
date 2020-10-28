@@ -4,7 +4,8 @@
 # https://github.com/freecodecampster/DirectInputServer
 # Python 3.7
 # https://docs.python.org/3/library/index.html
-# Developed on Visual Studio 2019 Community Edition with Python Workload installed.
+# Developed on Visual Studio Code with Python 3.8
+# https://code.visualstudio.com/docs/python/python-tutorial
 # https://docs.microsoft.com/en-gb/visualstudio/python/overview-of-python-tools-for-visual-studio?view=vs-2019
 # Python Server examples used
 # https://jeffreydavidsz.github.io/VICREO-Listener/
@@ -196,7 +197,9 @@ def start_server():
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Provide the ipAddress of the host - ipconfig in command prompt Windows
-    ipAddress = "192.168.0.16"
+    #ipAddress = "192.168.0.7"
+    # Bind the socket to the port
+    ipAddress = socket.gethostbyname(socket.getfqdn())
     port = 10001
     server_address = (ipAddress, port)
     print("Starting up on ip address %s port %s" % server_address)

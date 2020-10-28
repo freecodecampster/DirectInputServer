@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "c:\\Users\\davse\\source\\repos\\DirectInputServer\\.venv\\Scripts\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}

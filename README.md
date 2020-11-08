@@ -4,7 +4,8 @@
  The code examples below may be out of sync with the latest source code.
  
  ![How it works](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DI.jpeg)
- ![Playground in action](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DirectInput.mp4)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c0R5ytOUbYQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
  
 ## An Example
 

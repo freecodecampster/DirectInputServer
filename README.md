@@ -5,7 +5,9 @@
  
  ![How it works](https://github.com/freecodecampster/DirectInputServer/blob/master/images/DI.jpeg)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/c0R5ytOUbYQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[![Screencast of DirectInputClient and DirectInputServer working together](https://img.youtube.com/vi/c0R5ytOUbYQ/0.jpg)](http://www.youtube.com/watch?v=c0R5ytOUbYQ)
+
  
 ## An Example
 

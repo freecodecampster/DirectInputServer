@@ -1,8 +1,4 @@
 {
-<<<<<<< Updated upstream
-=======
-    "python.pythonPath": "C:\\Users\\davse\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
->>>>>>> Stashed changes
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }

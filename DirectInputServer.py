@@ -415,6 +415,34 @@ def start_server():
                         else:
                             print('wrong key')
 
+                    # Combination of four key commands
+                    elif numberOfKeys == 4:
+                        print("4 key commands: " + listOfKeysToPress[0] + " " + listOfKeysToPress[1] + " " + listOfKeysToPress[2] + " " + listOfKeysToPress[3])
+                        # Find first key command
+                        if len(listOfKeysToPress[0]) > 0:
+                            firstScancode = scancodes.get(listOfKeysToPress[0], "error")
+                        # Find second key command
+                        if len(listOfKeysToPress[1]) > 0:
+                            secondScancode = scancodes.get(listOfKeysToPress[1], "error")
+                        # Find third key command
+                        if len(listOfKeysToPress[2]) > 0:
+                            thirdScancode = scancodes.get(listOfKeysToPress[2], "error")
+                        # Find fourth key command
+                        if len(listOfKeysToPress[3]) > 0:
+                            fourthScancode = scancodes.get(listOfKeysToPress[3], "error")
+                        #if no error send the keycombo
+                        if firstScancode != "error" and secondScancode != "error" and thirdScancode != "error" and fourthScancode != "error":
+                            pressKey(firstScancode)
+                            pressKey(secondScancode)
+                            pressKey(thirdScancode)
+                            pressKey(fourthScancode)
+                            releaseKey(fourthScancode)
+                            releaseKey(thirdScancode)
+                            releaseKey(secondScancode)
+                            releaseKey(firstScancode)
+                        else:
+                            print('wrong key')
+
                     # Something wrong with the sent string
                     else:
                         print("Cannot process the string message sent")
